@@ -1,10 +1,9 @@
-export const Tabs = ({ tabs, activeTabId, onTabSelected }) => {
-  // console.log(onTabSelected);
+export const Tabs = ({ tabs, activeTabId = 'sdgfgd-1', onTabSelected }) => {
+  const activeTab = tabs.find(t => t.id === activeTabId) || tabs[0];
+
   return (
     <div className="section">
-      <h1 className="title">
-        Selected tab is {tabs.find(tab => activeTabId === tab.id).title}
-      </h1>
+      <h1 className="title">Selected tab is {activeTab.title}</h1>
 
       <div data-cy="TabsComponent">
         <div className="tabs is-boxed">
@@ -13,14 +12,14 @@ export const Tabs = ({ tabs, activeTabId, onTabSelected }) => {
               return (
                 <li
                   key={tab.id}
-                  className={tab.id === activeTabId ? 'is-active' : ''}
+                  className={tab.id === activeTab.id ? 'is-active' : ''}
                   data-cy="Tab"
                 >
                   <a
                     href={`#${tab.id}`}
                     data-cy="TabLink"
                     onClick={() => {
-                      if (tab.id !== activeTabId) {
+                      if (tab.id !== activeTab.id) {
                         onTabSelected(tab.id);
                       }
                     }}
@@ -34,7 +33,7 @@ export const Tabs = ({ tabs, activeTabId, onTabSelected }) => {
         </div>
 
         <div className="block" data-cy="TabContent">
-          {tabs.find(tab => activeTabId === tab.id).content}
+          {activeTab.content}
         </div>
       </div>
     </div>
